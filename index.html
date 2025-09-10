@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Health Dashboard - Formula & Calculator</title>
+    <title>Client Health Check Dashboard - Training Guide</title>
     <style>
         * { box-sizing: border-box; }
         body {
@@ -14,7 +14,7 @@
             min-height: 100vh;
         }
         .container {
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
             background: white;
             border-radius: 15px;
@@ -27,110 +27,115 @@
             padding: 30px;
             text-align: center;
         }
-        .header h1 { margin: 0; font-size: 2.2em; font-weight: 300; }
-        .header p { margin: 10px 0 0 0; opacity: 0.9; }
+        .header h1 { margin: 0; font-size: 2.5em; font-weight: 300; }
+        .header p { margin: 10px 0 0 0; opacity: 0.9; font-size: 1.1em; }
         .section {
             padding: 30px;
             border-bottom: 1px solid #eee;
         }
         .section:last-child { border-bottom: none; }
         .section-title {
-            font-size: 1.6em;
+            font-size: 1.8em;
             color: #333;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             font-weight: 600;
-            border-bottom: 2px solid #4facfe;
-            padding-bottom: 10px;
+            border-bottom: 3px solid #4facfe;
+            padding-bottom: 15px;
         }
-        .formula-box {
+        .panel-box {
             background: #f8f9ff;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
-            border-left: 4px solid #4facfe;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 25px 0;
+            border-left: 5px solid #4facfe;
+        }
+        .new-panel-box {
+            background: #f0fff8;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 25px 0;
+            border-left: 5px solid #28a745;
+        }
+        .old-panel-box {
+            background: #fff8f0;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 25px 0;
+            border-left: 5px solid #ff9500;
         }
         .formula {
             background: #f5f5f5;
-            padding: 15px;
-            border-radius: 6px;
+            padding: 18px;
+            border-radius: 8px;
             font-family: 'Courier New', monospace;
-            margin: 10px 0;
-            font-size: 14px;
-            line-height: 1.4;
+            margin: 15px 0;
+            font-size: 15px;
+            line-height: 1.6;
         }
         .status-row {
             display: flex;
             gap: 15px;
-            margin: 15px 0;
+            margin: 20px 0;
             flex-wrap: wrap;
         }
         .status-item {
             flex: 1;
-            min-width: 150px;
-            padding: 12px;
+            min-width: 180px;
+            padding: 15px;
             text-align: center;
-            border-radius: 8px;
+            border-radius: 10px;
             font-weight: bold;
-            font-size: 14px;
+            font-size: 15px;
         }
         .green { background: #d4edda; color: #155724; }
         .yellow { background: #fff3cd; color: #856404; }
         .red { background: #f8d7da; color: #721c24; }
         .calc-section {
             background: #f8f9fa;
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 20px;
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 25px;
         }
         .input-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin: 15px 0;
-        }
-        .threshold-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin: 15px 0;
+            gap: 25px;
+            margin: 20px 0;
         }
         .input-group {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 10px;
         }
         .input-group label {
-            font-size: 14px;
+            font-size: 15px;
             font-weight: 600;
             color: #555;
         }
         input[type="number"] {
-            padding: 12px;
+            padding: 15px;
             border: 2px solid #dee2e6;
-            border-radius: 6px;
+            border-radius: 8px;
             font-size: 16px;
         }
         input:focus {
             outline: none;
             border-color: #4facfe;
         }
-        input:read-only {
-            background-color: #e9ecef;
-            color: #6c757d;
-        }
         .btn {
             background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
             color: white;
-            padding: 12px 25px;
+            padding: 15px 30px;
             border: none;
-            border-radius: 6px;
+            border-radius: 8px;
             font-weight: 600;
             cursor: pointer;
-            margin: 10px 5px;
+            margin: 15px 10px;
+            font-size: 16px;
         }
         .btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(79, 172, 254, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(79, 172, 254, 0.3);
         }
         .btn-secondary {
             background: #6c757d;
@@ -138,122 +143,178 @@
         .results {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 15px;
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 20px;
         }
         .result-summary {
             text-align: center;
-            font-size: 1.8em;
-            margin-bottom: 20px;
-            padding: 15px;
+            font-size: 1.6em;
+            margin-bottom: 25px;
+            padding: 20px;
             background: rgba(255,255,255,0.1);
-            border-radius: 10px;
+            border-radius: 12px;
         }
         .result-details {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
         }
         .result-card {
             background: rgba(255,255,255,0.1);
-            padding: 15px;
-            border-radius: 8px;
-            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
         }
         .status-dot {
-            width: 16px;
-            height: 16px;
+            width: 18px;
+            height: 18px;
             border-radius: 50%;
             display: inline-block;
-            margin-right: 8px;
+            margin-right: 10px;
         }
         .healthy { background: #28a745; }
         .warning { background: #ffc107; }
         .critical { background: #dc3545; }
         .example {
             background: #fff8e1;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 10px 0;
-            border-left: 4px solid #ffa726;
-            font-size: 14px;
+            padding: 18px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 5px solid #ffa726;
+            font-size: 15px;
         }
-        .explanation-box {
-            background: #e8f5e8;
+        .key-insight {
+            background: #e3f2fd;
             padding: 20px;
             border-radius: 10px;
             margin: 20px 0;
-            border-left: 4px solid #28a745;
+            border-left: 5px solid #2196f3;
+        }
+        .business-note {
+            background: #f3e5f5;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #9c27b0;
         }
         @media (max-width: 768px) {
             .container { margin: 10px; }
             .section { padding: 20px; }
-            .input-row, .threshold-row { grid-template-columns: 1fr; }
+            .input-row { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>📊 Health Dashboard Formula & Calculator</h1>
-            <p>Business formulas with live calculation tools</p>
+            <h1>🏥 Client Health Check Dashboard</h1>
+            <p>Complete Training Guide - Understanding Health Metrics & Calculations</p>
         </div>
         
-        <!-- Weekly Health Section -->
+        <!-- Dashboard Overview -->
         <div class="section">
-            <div class="section-title">📈 Weekly Health Status</div>
+            <div class="section-title">📊 Dashboard Overview</div>
             
-            <div class="formula-box">
-                <h3>🚦 Status Color Formula</h3>
-                <div class="formula">Performance Ratio = Current Week ÷ Last Week</div>
+            <div class="key-insight">
+                <h3>🎯 Purpose</h3>
+                <p>This dashboard monitors the operational health of practice management clients by comparing current week performance against previous week across key business metrics.</p>
+            </div>
+            
+            <div class="business-note">
+                <h3>📈 Key Business Questions Answered</h3>
+                <ul>
+                    <li><strong>Are our clients maintaining consistent business operations?</strong></li>
+                    <li><strong>Which clients need immediate attention due to declining performance?</strong></li>
+                    <li><strong>How many new clients haven't started generating business activity?</strong></li>
+                    <li><strong>What are the daily usage trends across our platform?</strong></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Weekly Health Status Panel -->
+        <div class="section">
+            <div class="section-title">🚦 Weekly Health Status Panel</div>
+            
+            <div class="business-note">
+                <h3>📋 Panel Description</h3>
+                <p><strong>What it shows:</strong> Week-over-week comparison of 4 key business metrics for each client company, with an overall health score.</p>
+                <p><strong>Business Value:</strong> Immediately identifies clients experiencing operational difficulties or improvements.</p>
+                <p><strong>Tooltip:</strong> "Week-over-Week Health Status: Last 7 days vs. previous 7 days comparison."</p>
+            </div>
+
+            <div class="new-panel-box">
+                <h3>🆕 NEW Calculation Method (Current)</h3>
+                <div class="formula">Performance Ratio = Current Week ÷ Previous Week</div>
                 
                 <div class="status-row">
-                    <div class="status-item green">🟢 Green (Healthy): Ratio ≥ Green Threshold</div>
-                    <div class="status-item yellow">🟡 Yellow (Warning): Yellow Threshold ≤ Ratio < Green Threshold</div>
-                    <div class="status-item red">🔴 Red (Critical): Ratio < Yellow Threshold OR Current = 0</div>
+                    <div class="status-item green">🟢 Healthy: Ratio ≥ 1.0 (Equal or better performance)</div>
+                    <div class="status-item yellow">🟡 Warning: 0.7 ≤ Ratio < 1.0 (Up to 30% decline)</div>
+                    <div class="status-item red">🔴 Critical: Ratio < 0.7 (More than 30% decline) OR no activity</div>
                 </div>
                 
                 <div class="example">
-                    <strong>Example:</strong> Current: 148, Last: 160, Green: 0.9, Yellow: 0.5<br>
-                    Ratio = 148÷160 = 0.925 → Since 0.925 ≥ 0.9 → 🟢 Green (Healthy)
+                    <strong>NEW Example:</strong> Appointments - Current: 14, Previous: 27<br>
+                    Ratio = 14 ÷ 27 = 0.519 → Since 0.519 < 0.7 → 🔴 Critical<br>
+                    <strong>Business Interpretation:</strong> Client experienced a 48% drop in appointments (more than 30% threshold)
                 </div>
             </div>
-            
-            <div class="formula-box">
-                <h3>⭐ Health Score Formula</h3>
-                <div class="formula">Health Score = ((Green Count × 1) + (Yellow Count × 0.5) + (Red Count × 0)) ÷ Total Metrics × 100%</div>
+
+            <!--<div class="old-panel-box">
+                <h3>🔄 OLD Calculation Method (Legacy)</h3>
+                <div class="formula">Performance Ratio = Current Week ÷ Previous Week</div>
+                
+                <div class="status-row">
+                    <div class="status-item green">🟢 Healthy: Ratio ≥ 0.9 (90%+ performance)</div>
+                    <div class="status-item yellow">🟡 Warning: 0.5 ≤ Ratio < 0.9 (50-89% performance)</div>
+                    <div class="status-item red">🔴 Critical: Ratio < 0.5 (Below 50%) OR no activity</div>
+                </div>
+                
                 <div class="example">
-                    <strong>Example:</strong> 2 Green + 1 Yellow + 1 Red = (2×1 + 1×0.5 + 1×0) ÷ 4 × 100% = 62.5%
+                    <strong>OLD Example:</strong> Same data - Current: 14, Previous: 27<br>
+                    Ratio = 14 ÷ 27 = 0.519 → Since 0.519 ≥ 0.5 but < 0.9 → 🟡 Warning<br>
+                    <strong>Result:</strong> Less sensitive to performance drops
                 </div>
-            </div>
-            
-            <div class="formula-box">
-                <h3>📈 Change Percentage Formula</h3>
+            </div>-->
+
+            <div class="panel-box">
+                <h3>⭐ Overall Health Score Calculation</h3>
                 <div class="formula">
-                    Change % = ((Current - Last) ÷ Last) × 100<br>
-                    Special Cases:<br>
-                    • If Last = 0 AND Current = 0 → "0%"<br>
-                    • If Last = 0 AND Current > 0 → "New"
+                    Health Score = ((Healthy Count × 1.0) + (Warning Count × 0.5) + (Critical Count × 0.0)) ÷ 4 metrics × 100%
                 </div>
                 <div class="example">
-                    <strong>Example:</strong> Current: 117, Last: 173 → ((117-173)÷173)×100 = -32.4%
+                    <strong>Example:</strong><br>
+                    • Appointments: Healthy = 1.0 point<br>
+                    • Invoices: Warning = 0.5 points<br>
+                    • Claims: Critical = 0.0 points<br>
+                    • EOBs: Healthy = 1.0 point<br>
+                    <strong>Total:</strong> (1.0 + 0.5 + 0.0 + 1.0) ÷ 4 × 100% = 62.5%
                 </div>
             </div>
-            
-            <div class="calc-section">
-                <h3>🧮 Weekly Health Calculator</h3>
-                
-                <div class="threshold-row">
-                    <div class="input-group">
-                        <label>🟢 Green Threshold (Healthy)</label>
-                        <input type="number" id="greenThreshold" value="0.9" step="0.01" min="0" max="1" readonly>
-                    </div>
-                    <div class="input-group">
-                        <label>🟡 Yellow Threshold (Warning)</label>
-                        <input type="number" id="yellowThreshold" value="0.5" step="0.01" min="0" max="1" readonly>
-                    </div>
+
+            <div class="panel-box">
+                <h3>🔍 Special Edge Cases (NEW Method)</h3>
+                <div class="formula">
+                    • Both weeks = 0: Critical (complete inactivity)<br>
+                    • Previous = 0, Current > 0: Healthy (new activity started)<br>
+                    • Previous > 0, Current = 0: Critical (activity stopped)
                 </div>
+                <div class="example">
+                    <strong>Business Logic:</strong> Zero activity is never considered healthy unless new activity is starting.
+                </div>
+            </div>
+
+            <div class="key-insight">
+                <h3>📊 Four Metrics Monitored</h3>
+                <ul>
+                    <li><strong>Appointments Rendered (Count):</strong> Patient appointments completed</li>
+                    <li><strong>Invoices Posted (Count):</strong> Bills generated for services</li>
+                    <li><strong>Claims Accepted by Payor (Count):</strong> Insurance claims processed</li>
+                    <li><strong>EOBs Received:</strong> Explanation of Benefits received from insurers</li>
+                </ul>
+            </div>
+
+            <div class="calc-section">
+                <h3>🧮 Weekly Health Calculator - Compare Methods</h3>
                 
                 <div class="input-row">
                     <div class="input-group">
@@ -261,18 +322,18 @@
                         <input type="number" id="currentWeek" placeholder="Enter current week value" min="0">
                     </div>
                     <div class="input-group">
-                        <label>📊 Last Week Value</label>
-                        <input type="number" id="lastWeek" placeholder="Enter last week value" min="0">
+                        <label>📊 Previous Week Value</label>
+                        <input type="number" id="lastWeek" placeholder="Enter previous week value" min="0">
                     </div>
                 </div>
                 
-                <button class="btn" onclick="calculateWeeklyHealth()">Calculate Status & Health Score</button>
+                <button class="btn" onclick="calculateWeeklyHealth()">Calculate Status (Both Methods)</button>
                 <button class="btn btn-secondary" onclick="clearWeekly()">Clear</button>
                 
                 <div id="weeklyResults" class="results" style="display:none;">
                     <div class="result-summary">
                         <div id="statusResult"></div>
-                        <div>Health Score: <span id="healthScore">--</span>%</div>
+                        <div id="healthScore"></div>
                     </div>
                     <div class="result-details">
                         <div class="result-card">
@@ -280,7 +341,7 @@
                             <div id="calculationDetails"></div>
                         </div>
                         <div class="result-card">
-                            <h4>📈 Performance Analysis</h4>
+                            <h4>📈 Method Comparison</h4>
                             <div id="performanceAnalysis"></div>
                         </div>
                     </div>
@@ -288,97 +349,144 @@
             </div>
         </div>
 
-        <!-- Correlation Analysis Section -->
+        <!-- Companies Without Activities Panel -->
         <div class="section">
-            <div class="section-title">🔍 Metric Correlation Analysis</div>
+            <div class="section-title">🏢 Companies Without Activities Panel</div>
             
-            <div class="explanation-box">
-                <h3>📅 Problem Days Current Week</h3>
-                <div class="formula">Problem Days = COUNT of days WHERE (AppointmentsRendered > 0 AND InvoicePosted = 0)</div>
-                <p><strong>Meaning:</strong> Days where appointments were rendered but no invoices were posted for those appointments.</p>
-                <div class="example">
-                    <strong>Example:</strong><br>
-                    Monday: 5 appointments, 0 invoices ✓ (Problem Day)<br>
-                    Tuesday: 3 appointments, 2 invoices ✗ (Not a Problem Day)<br>
-                    Wednesday: 0 appointments, 0 invoices ✗ (Not a Problem Day)<br>
-                    <strong>Result:</strong> 1 Problem Day (Monday)
-                </div>
+            <div class="business-note">
+                <h3>📋 Panel Description</h3>
+                <p><strong>What it shows:</strong> List of companies that have been onboarded but haven't generated any system activity yet.</p>
+                <p><strong>Business Value:</strong> Identifies new clients who may need onboarding assistance or technical support.</p>
+                <p><strong>Tooltip:</strong> "Companies Without Activity: Onboarded companies with no system activity (appointments, invoices, claims, logins, etc.)."</p>
             </div>
-            
-            <div class="explanation-box">
-                <h3>📊 Appointment Days Current Week</h3>
-                <div class="formula">Appointment Days = COUNT of days WHERE (AppointmentsRendered > 0)</div>
-                <p><strong>Meaning:</strong> Total days in the week where at least one appointment was rendered.</p>
-                <div class="example">
-                    <strong>Example:</strong> Using same week above<br>
-                    Days with appointments: Monday, Tuesday<br>
-                    <strong>Result:</strong> 2 Appointment Days
-                </div>
-            </div>
-            
-            <div class="explanation-box">
-                <h3>📅 Problem Days Last Week & Appointment Days Last Week</h3>
+
+            <!--<div class="panel-box">
+                <h3>🔍 Selection Criteria</h3>
                 <div class="formula">
-                    Problem Days Last Week = Same logic as current week, applied to previous week<br>
-                    Appointment Days Last Week = Same logic as current week, applied to previous week
+                    Companies are included if:<br>
+                    • IsActive = 1 (Active companies only)<br>
+                    • IsTestCompany = 0 (Exclude test accounts)<br>
+                    • No records in tblPMEnvironmentMetrics (No system activity)<br>
+                    • Not in demo companies list<br>
+                    • Within selected environment filter
                 </div>
-                <p><strong>Purpose:</strong> Used for comparison and trend analysis.</p>
+            </div>-->
+
+            <div class="key-insight">
+                <h3>📊 Data Displayed</h3>
+                <ul>
+                    <li><strong>Company Name:</strong> Client organization name</li>
+                   <!-- <li><strong>Environment:</strong> System environment (Production, Staging, etc.)</li>-->
+                    <li><strong>Onboarded On:</strong> Date company was set up in system</li>
+                    <li><strong>Days Since Onboarded:</strong> Number of days since setup</li>
+                </ul>
             </div>
+
+            <div class="example">
+                <strong>Business Use Cases:</strong><br>
+                • <strong>Follow-up Actions:</strong> Contact companies onboarded >7 days ago<br>
+                • <strong>Success Metrics:</strong> Track time-to-first-activity<br>
+                • <strong>Support Prioritization:</strong> Focus on companies >30 days without activity
+            </div>
+        </div>
+
+        <!-- Overtime Stats Panels -->
+        <div class="section">
+            <div class="section-title">📈 Overtime Stats Panels</div>
             
-            <div class="formula-box">
-                <h3>🚦 Correlation Status Calculation</h3>
+            <div class="business-note">
+                <h3>📋 Panel Description</h3>
+                <p><strong>What they show:</strong> Trend charts showing daily system usage over time.</p>
+                <p><strong>Business Value:</strong> Monitor adoption trends, identify usage patterns, and spot potential issues.</p>
+            </div>
+
+            <div class="panel-box">
+                <h3>👥 Daily User Logins Panel</h3>
                 <div class="formula">
-                    WHEN ProblemDays_CurrentWeek >= 5 THEN 'Critical'<br>
-                    WHEN ProblemDays_CurrentWeek >= 2 THEN 'Warning'<br>
-                    ELSE 'Healthy'
+                    Query: SUM(UsersLoggedIn) per day, grouped by environment<br>
+                    Tooltip: "Total users logged into the system each day"
                 </div>
                 <div class="example">
-                    <strong>Example:</strong> ProblemDays_CurrentWeek = 3<br>
-                    Since 3 >= 2 (but < 5) → <strong>Warning</strong>
+                    <strong>Business Insights:</strong><br>
+                    • <strong>Usage Trends:</strong> Are clients actively using the system?<br>
+                    • <strong>Environment Comparison:</strong> Which environments are most popular?<br>
+                    • <strong>Adoption Rate:</strong> Is daily usage growing or declining?
                 </div>
             </div>
-            
-            <div class="formula-box">
-                <h3>📊 Problem Rate Calculation</h3>
-                <div class="formula">Problem Rate = (ProblemDays_CurrentWeek ÷ AppointmentDays_CurrentWeek) × 100%</div>
-                <div class="example">
-                    <strong>Example:</strong> 2 Problem Days ÷ 4 Appointment Days<br>
-                    Problem Rate = (2 ÷ 4) × 100% = <strong>50.0%</strong>
-                </div>
-            </div>
-            
-            <div class="formula-box">
-                <h3>📈 Change from Last Week Calculation</h3>
+
+            <div class="panel-box">
+                <h3>📅 Daily Appointments Panel</h3>
                 <div class="formula">
-                    CASE<br>
-                    WHEN ProblemDays_LastWeek = 0 AND ProblemDays_CurrentWeek = 0 THEN '0'<br>
-                    WHEN ProblemDays_LastWeek = 0 THEN 'New Issues'<br>
-                    ELSE CAST((ProblemDays_CurrentWeek - ProblemDays_LastWeek) AS VARCHAR)<br>
-                    END
+                    Query: SUM(AppointmentsRendered) per day, grouped by environment<br>
+                    Tooltip: "Total appointments rendered in the system each day"
                 </div>
                 <div class="example">
-                    <strong>Example:</strong> Current = 3, Last = 1<br>
-                    Change = 3 - 1 = <strong>+2</strong> (2 more problem days this week)
+                    <strong>Business Insights:</strong><br>
+                    • <strong>Clinical Activity:</strong> Volume of patient care being delivered<br>
+                    • <strong>Business Health:</strong> Core revenue-generating activity trends<br>
+                    • <strong>Seasonal Patterns:</strong> Identify cyclical usage patterns
                 </div>
             </div>
+        </div>
+
+        <!-- Environment Metrics Table -->
+        <div class="section">
+            <div class="section-title">📊 Environment Metrics Table</div>
             
-            <div class="explanation-box">
-                <h3>🏥 Complete Example Scenario</h3>
-                <p><strong>Company: ABC Medical Group</strong></p>
-                <div style="background: white; padding: 15px; border-radius: 8px; margin: 10px 0;">
-                    <strong>Current Week:</strong><br>
-                    • Problem Days: 2 (Monday & Thursday had appointments but no invoices)<br>
-                    • Appointment Days: 4 (Monday, Tuesday, Thursday, Friday had appointments)<br><br>
-                    
-                    <strong>Last Week:</strong><br>
-                    • Problem Days: 1<br>
-                    • Appointment Days: 5<br><br>
-                    
-                    <strong>Calculated Results:</strong><br>
-                    • Correlation Status: Warning (2 >= 2)<br>
-                    • Problem Rate: 50.0% (2 ÷ 4 × 100)<br>
-                    • Change from Last Week: +1 (2 - 1 = +1 more problem day)
+            <div class="business-note">
+                <h3>📋 Panel Description</h3>
+                <p><strong>What it shows:</strong> Detailed daily metrics breakdown by company and environment.</p>
+                <p><strong>Business Value:</strong> Granular view of individual client performance and activity patterns.</p>
+            </div>
+
+            <div class="panel-box">
+                <h3>📊 Metrics Included</h3>
+                <div class="formula">
+                    • Company & Environment details<br>
+                    • Onboarded On date<br>
+                    • Day of week<br>
+                    • Date of activity<br>
+                    • Total appointments (hours)<br>
+                    • Appointments Rendered (hours)<br>
+                    • Appointments Cancelled (hours)<br>
+                    • Total appointments (count)
                 </div>
+            </div>
+
+            <div class="key-insight">
+                <h3>💡 Analysis Capabilities</h3>
+                <ul>
+                    <li><strong>Client Comparison:</strong> Compare performance across different clients</li>
+                    <li><strong>Day-of-Week Analysis:</strong> Identify weekly patterns</li>
+                    <li><strong>Cancellation Rates:</strong> Monitor appointment cancellation trends</li>
+                    <li><strong>Utilization Tracking:</strong> Hours vs count metrics analysis</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Training Summary -->
+        <div class="section">
+            <div class="section-title">🎓 Training Summary</div>
+            
+            <div class="key-insight">
+                <h3>🔑 Key Takeaways</h3>
+                <ul>
+                    <li><strong>Health Status:</strong> NEW method is more sensitive (30% vs 50% thresholds)</li>
+                    <li><strong>Monitoring Focus:</strong> Identify declining clients early for intervention</li>
+                    <li><strong>Onboarding Success:</strong> Track new clients' time-to-activity</li>
+                    <li><strong>Usage Trends:</strong> Monitor daily login and appointment volumes</li>
+                    <li><strong>Data Quality:</strong> All panels exclude test/demo data for accuracy</li>
+                </ul>
+            </div>
+
+            <div class="business-note">
+                <h3>📋 Action Items Based on Dashboard</h3>
+                <ul>
+                    <li><strong>Red Status Clients:</strong> Immediate outreach and support</li>
+                    <li><strong>Yellow Status Clients:</strong> Monitor closely, proactive check-in</li>
+                    <li><strong>No Activity Companies:</strong> Follow-up on onboarding progress</li>
+                    <li><strong>Declining Trends:</strong> Investigate root causes and solutions</li>
+                </ul>
             </div>
         </div>
     </div>
@@ -387,74 +495,74 @@
         function calculateWeeklyHealth() {
             const current = parseFloat(document.getElementById('currentWeek').value) || 0;
             const last = parseFloat(document.getElementById('lastWeek').value) || 0;
-            const greenThreshold = parseFloat(document.getElementById('greenThreshold').value);
-            const yellowThreshold = parseFloat(document.getElementById('yellowThreshold').value);
-            
-            let status, statusColor, ratio, change, healthScore;
-            
-            // Calculate ratio and status
-            if (current === 0) {
-                status = 'Critical';
-                statusColor = 'critical';
-                ratio = '0.000';
-                change = 'No activity';
-                healthScore = 0;
-            } else if (last === 0 && current > 0) {
-                status = 'Healthy';
-                statusColor = 'healthy';
-                ratio = 'N/A';
-                change = 'New activity';
-                healthScore = 100;
-            } else {
-                ratio = (current / last).toFixed(3);
-                const changePercent = ((current - last) / last) * 100;
-                change = changePercent >= 0 ? `+${changePercent.toFixed(1)}%` : `${changePercent.toFixed(1)}%`;
-                
-                const ratioValue = current / last;
-                if (ratioValue >= greenThreshold) {
-                    status = 'Healthy';
-                    statusColor = 'healthy';
-                    healthScore = 100;
-                } else if (ratioValue >= yellowThreshold) {
-                    status = 'Warning';
-                    statusColor = 'warning';
-                    healthScore = 50;
-                } else {
-                    status = 'Critical';
-                    statusColor = 'critical';
-                    healthScore = 0;
-                }
+
+            // New Thresholds
+            const greenThresholdNew = 1.0;
+            const yellowThresholdNew = 0.7;
+
+            // Old Thresholds
+            const greenThresholdOld = 0.9;
+            const yellowThresholdOld = 0.5;
+
+            // Function to determine status
+            function getStatus(current, last, green, yellow) {
+                if (current === 0 && last === 0) return 'Critical';
+                if (current === 0 && last > 0) return 'Critical';
+                if (last === 0 && current > 0) return 'Healthy';
+                const ratio = current / last;
+                if (ratio >= green) return 'Healthy';
+                if (ratio >= yellow) return 'Warning';
+                return 'Critical';
             }
-            
+
+            // Calculate statuses
+            const statusNew = getStatus(current, last, greenThresholdNew, yellowThresholdNew);
+            const statusOld = getStatus(current, last, greenThresholdOld, yellowThresholdOld);
+
+            // Calculate ratio and change
+            let ratioValue = (last === 0) ? 'N/A' : (current / last).toFixed(3);
+            let changePercent = (last === 0) ? 'N/A' : (((current - last) / last) * 100).toFixed(1);
+            if (changePercent !== 'N/A') {
+                changePercent = (parseFloat(changePercent) >= 0) ? `+${changePercent}%` : `${changePercent}%`;
+            }
+
+            // Calculate health scores
+            let healthScoreNew = statusNew === 'Healthy' ? 100 : statusNew === 'Warning' ? 50 : 0;
+            let healthScoreOld = statusOld === 'Healthy' ? 100 : statusOld === 'Warning' ? 50 : 0;
+
             // Display results
             document.getElementById('statusResult').innerHTML = `
-                <span class="status-dot ${statusColor}"></span>Status: ${status}
+                <div><strong>🆕 New Method:</strong> <span class='status-dot ${statusNew.toLowerCase()}'></span>${statusNew}</div>
+                <div><strong>🔄 Old Method:</strong> <span class='status-dot ${statusOld.toLowerCase()}'></span>${statusOld}</div>
             `;
-            document.getElementById('healthScore').textContent = healthScore;
+            
+            document.getElementById('healthScore').innerHTML = `
+                <div><strong>New Health Score:</strong> ${healthScoreNew}%</div>
+                <div><strong>Old Health Score:</strong> ${healthScoreOld}%</div>
+            `;
+
             document.getElementById('calculationDetails').innerHTML = `
-                <div>Current Week: ${current}</div>
-                <div>Last Week: ${last}</div>
-                <div>Ratio: ${ratio}</div>
-                <div>Change: ${change}</div>
+                <div><strong>Current Week:</strong> ${current}</div>
+                <div><strong>Previous Week:</strong> ${last}</div>
+                <div><strong>Ratio:</strong> ${ratioValue}</div>
+                <div><strong>Change:</strong> ${changePercent}</div>
             `;
+
             document.getElementById('performanceAnalysis').innerHTML = `
-                <div>Green Threshold: ${greenThreshold}</div>
-                <div>Yellow Threshold: ${yellowThreshold}</div>
-                <div>Status Logic: ${getStatusLogic(current, last, greenThreshold, yellowThreshold)}</div>
+                <div><strong>New Thresholds:</strong></div>
+                <div>🟢 Green ≥ ${greenThresholdNew} (100%+ performance)</div>
+                <div>🟡 Yellow ≥ ${yellowThresholdNew} (70-99% performance)</div>
+                <div>🔴 Red < ${yellowThresholdNew} (Below 70%)</div>
+                <br>
+                <div><strong>Old Thresholds:</strong></div>
+                <div>🟢 Green ≥ ${greenThresholdOld} (90%+ performance)</div>
+                <div>🟡 Yellow ≥ ${yellowThresholdOld} (50-89% performance)</div>
+                <div>🔴 Red < ${yellowThresholdOld} (Below 50%)</div>
             `;
             
             document.getElementById('weeklyResults').style.display = 'block';
         }
-        
-        function getStatusLogic(current, last, green, yellow) {
-            if (current === 0) return 'Current = 0 → Critical';
-            if (last === 0) return 'Last = 0 & Current > 0 → Healthy';
-            const ratio = current / last;
-            if (ratio >= green) return `Ratio ${ratio.toFixed(3)} ≥ ${green} → Healthy`;
-            if (ratio >= yellow) return `${yellow} ≤ Ratio ${ratio.toFixed(3)} < ${green} → Warning`;
-            return `Ratio ${ratio.toFixed(3)} < ${yellow} → Critical`;
-        }
-        
+
         function clearWeekly() {
             document.getElementById('currentWeek').value = '';
             document.getElementById('lastWeek').value = '';
